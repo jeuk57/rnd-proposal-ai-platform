@@ -1,62 +1,16 @@
-# rnd-proposal-ai-platform
+﻿# rnd-proposal-ai-platform
 
-# 국가 R&D 공고 입찰 지원 AI 플랫폼
+Public portfolio extraction of the PPT generation pipeline from a larger R&D proposal automation project.
 
-> 본 저장소는 팀 프로젝트 원본 저장소가 아니라, 제가 담당한 기능과 공개 가능한 코드만 정리한 포트폴리오용 저장소입니다.
+## Structure
+- `src/ppt_maker/main_ppt.py`: LangGraph-based PPT pipeline entrypoint
+- `src/ppt_maker/nodes/`: section split, generation, render, and postprocess nodes
+- `src/ppt_maker/background/`: background assets used in the postprocess layer
+- `src/utils/`: minimal parsing and DB lookup helpers required by the pipeline
 
-## 1. 프로젝트 개요
-국가 R&D 공고문을 분석해 입찰 준비에 필요한 정보를 구조화하고, 체크리스트, 유사 RFP 추천, 발표자료 생성을 지원하는 AI 플랫폼 프로젝트입니다.
+## Run
+Use the repository root as the working directory.
 
-## 2. 문제 정의
-국가 R&D 공고문 분석과 제안 준비 과정은 문서 확인, 핵심 요구사항 정리, 발표자료 구성까지 반복적인 수작업이 많습니다.  
-이 프로젝트는 공고문 내용을 빠르게 구조화하고, 준비 과정에 필요한 결과물을 자동화해 실질적인 업무 부담을 줄이는 것을 목표로 했습니다.
-
-## 3. 담당 역할
-- 프로젝트 주제 구체화 및 기능 구조 재정리
-- 공고문 PDF 텍스트 추출 및 분석 기능 구현
-- PPT 생성 파이프라인 설계
-- 생성 결과 후처리 로직 개선
-- 슬라이드 유형별 처리 기준 분리 및 결과물 일관성 개선
-
-## 4. 프로젝트 흐름
-1. 공고문 입력
-2. 텍스트 추출 및 전처리
-3. 핵심 내용 구조화 및 섹션 분리
-4. 발표자료 초안 생성
-5. 후처리 로직 적용
-6. 최종 PPT 결과물 생성
-
-## 5. 핵심 구현 내용
-### 5-1. 문서 기반 데이터 처리
-공고문 PDF에서 텍스트를 추출하고, 후속 처리에 사용할 수 있도록 구조화했습니다.
-
-### 5-2. PPT 생성 파이프라인 재구성
-초기에는 생성 결과의 텍스트 길이와 배치가 일정하지 않아 발표자료로 활용하기 어려웠습니다.  
-이를 개선하기 위해 입력 처리 → 섹션 분리 → 생성 → 후처리 단계로 파이프라인을 재구성했습니다.
-
-### 5-3. 생성 단계와 후처리 단계 분리
-생성 단계에서는 슬라이드 초안을 만들고, 후처리 단계에서는 텍스트 정렬, 길이 편차, 형식 차이를 보정해 결과물의 일관성을 높였습니다.
-
-### 5-4. 슬라이드 유형별 처리 기준 적용
-슬라이드 유형에 따라 처리 기준을 다르게 두어, 동일한 방식으로 생성했을 때 발생하는 품질 편차를 줄이도록 개선했습니다.
-
-## 6. 기술 스택
-- Python
-- LangGraph
-- PDF 텍스트 추출 및 전처리
-- Gamma API
-- python-pptx
-
-## 7. 배운 점
-이 프로젝트를 통해 생성형 AI 서비스는 모델을 연결하는 것만으로 완성되지 않으며,  
-데이터 흐름, 품질 기준, 결과물 형식까지 함께 설계해야 실제로 사용할 수 있는 수준에 도달할 수 있다는 점을 배웠습니다.
-
-## 8. 저장소 구성
 ```bash
-.
-├── README.md
-├── docs/
-├── images/
-├── src/
-├── requirements.txt
-└── .env.example
+python -m src.ppt_maker.main_ppt --help
+```
