@@ -1,0 +1,1 @@
+# rnd-proposal-ai-project
